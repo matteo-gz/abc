@@ -37,8 +37,9 @@ func ReadFile(filename string) {
 	}
 }
 func Replace(str *string) bool {
-	reg := regexp.MustCompile(`[a-zA-Z]+\s\{`)
+	reg := regexp.MustCompile(`[a-zA-Z0-9]+\s\{`)
 	s := reg.FindString(*str)
+	//fmt.Println("---", *str, "---")
 	if s != "" {
 		*str = reg.ReplaceAllString(*str, `message ${0} `)
 		return true
@@ -47,7 +48,7 @@ func Replace(str *string) bool {
 }
 
 func Replace1(str *string, int2 *int) bool {
-	reg := regexp.MustCompile(`([a-zA-Z]+)\s\[\]([a-zA-Z]+).*`)
+	reg := regexp.MustCompile(`([a-zA-Z0-9]+)\s\[\]([a-zA-Z0-9]+).*`)
 	if reg.FindString(*str) != "" {
 		*str = reg.ReplaceAllString(*str, fmt.Sprintf("repeated ${2} ${1} =%d;", *int2))
 		*int2++
@@ -56,7 +57,7 @@ func Replace1(str *string, int2 *int) bool {
 	return false
 }
 func Replace2(str *string, int2 *int) bool {
-	reg := regexp.MustCompile(`([a-zA-Z]+)\s([a-zA-Z0-9]+).*`)
+	reg := regexp.MustCompile(`([a-zA-Z0-9]+)\s([a-zA-Z0-9]+).*`)
 	if reg.FindString(*str) != "" {
 		*str = reg.ReplaceAllString(*str, fmt.Sprintf(" ${2} ${1} =%d;", *int2))
 		*int2++
